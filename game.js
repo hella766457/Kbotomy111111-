@@ -8,24 +8,43 @@ let player = {
   x: 300,
   y: 220,
   size: 32,
-  speed: 3
+  speed: 2
 };
 
-let keys = {};
+let target = null;
 
-document.addEventListener("keydown", e => {
-  keys[e.key] = true;
+// PC 클릭
+canvas.addEventListener("click", function(e) {
+  const rect = canvas.getBoundingClientRect();
+  target = {
+    x: e.clientX - rect.left,
+    y: e.clientY - rect.top
+  };
 });
 
-document.addEventListener("keyup", e => {
-  keys[e.key] = false;
+// 모바일 터치
+canvas.addEventListener("touchstart", function(e) {
+  const rect = canvas.getBoundingClientRect();
+  const touch = e.touches[0];
+  target = {
+    x: touch.clientX - rect.left,
+    y: touch.clientY - rect.top
+  };
 });
 
 function update() {
-  if (keys["ArrowUp"]) player.y -= player.speed;
-  if (keys["ArrowDown"]) player.y += player.speed;
-  if (keys["ArrowLeft"]) player.x -= player.speed;
-  if (keys["ArrowRight"]) player.x += player.speed;
+  if (target) {
+    let dx = target.x - player.x;
+    let dy = target.y - player.y;
+    let distance = Math.sqrt(dx * dx + dy * dy);
+
+    if (distance > 1) {
+      player.x += (dx / distance) * player.speed;
+      player.y += (dy / distance) * player.speed;
+    } else {
+      target = null; // 도착하면 멈춤
+    }
+  }
 }
 
 function draw() {
