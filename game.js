@@ -1,34 +1,26 @@
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
-canvas.width = 640;
-canvas.height = 480;
+// 🔥 화면 크기에 맞게 자동 설정
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
 let player = {
-  x: 300,
-  y: 220,
+  x: canvas.width / 2,
+  y: canvas.height / 2,
   size: 32,
-  speed: 2
+  speed: 4
 };
 
 let target = null;
 
-// PC 클릭
-canvas.addEventListener("click", function(e) {
+// 🔥 PC + 모바일 완전 통합 입력
+canvas.addEventListener("pointerdown", (e) => {
   const rect = canvas.getBoundingClientRect();
-  target = {
-    x: e.clientX - rect.left,
-    y: e.clientY - rect.top
-  };
-});
 
-// 모바일 터치
-canvas.addEventListener("touchstart", function(e) {
-  const rect = canvas.getBoundingClientRect();
-  const touch = e.touches[0];
   target = {
-    x: touch.clientX - rect.left,
-    y: touch.clientY - rect.top
+    x: (e.clientX - rect.left),
+    y: (e.clientY - rect.top)
   };
 });
 
@@ -36,13 +28,13 @@ function update() {
   if (target) {
     let dx = target.x - player.x;
     let dy = target.y - player.y;
-    let distance = Math.sqrt(dx * dx + dy * dy);
+    let distance = Math.hypot(dx, dy);
 
-    if (distance > 1) {
+    if (distance > 3) {
       player.x += (dx / distance) * player.speed;
       player.y += (dy / distance) * player.speed;
     } else {
-      target = null; // 도착하면 멈춤
+      target = null;
     }
   }
 }
@@ -54,10 +46,10 @@ function draw() {
   ctx.fillRect(player.x, player.y, player.size, player.size);
 }
 
-function gameLoop() {
+function loop() {
   update();
   draw();
-  requestAnimationFrame(gameLoop);
+  requestAnimationFrame(loop);
 }
 
-gameLoop();
+loop();
