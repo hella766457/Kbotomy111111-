@@ -63,6 +63,19 @@ function update() {
     } else {
       target = null;
     }
+    let nextX = player.x + (dx / distance) * player.speed;
+let nextY = player.y + (dy / distance) * player.speed;
+
+// 플레이어 네 귀퉁이 검사
+if (
+  !isWall(nextX, nextY) &&
+  !isWall(nextX + player.size, nextY) &&
+  !isWall(nextX, nextY + player.size) &&
+  !isWall(nextX + player.size, nextY + player.size)
+) {
+  player.x = nextX;
+  player.y = nextY;
+  }
   }
 }
 
