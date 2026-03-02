@@ -78,5 +78,13 @@ function loop() {
   draw();
   requestAnimationFrame(loop);
 }
+function isWall(x, y) {
+  let tileX = Math.floor(x / tileSize);
+  let tileY = Math.floor(y / tileSize);
+
+  if (!map[tileY] || map[tileY][tileX] === undefined) return true;
+
+  return map[tileY][tileX] === 1;
+}
 
 loop();
