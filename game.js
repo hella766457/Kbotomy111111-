@@ -1,6 +1,29 @@
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
-const wallThickness = 40;
+const map = [
+  [1,1,2,2,1,1,1,1,1,1],
+  [1,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,1],
+  [1,0,0,0,0,0,0,0,0,1],
+  [1,1,1,1,1,1,1,1,1,1],
+];
+const tileSize = 64;
+for (let y = 0; y < map.length; y++) {
+  for (let x = 0; x < map[y].length; x++) {
+
+    if (map[y][x] === 1) ctx.fillStyle = "#555"; // 벽
+    if (map[y][x] === 0) ctx.fillStyle = "#222"; // 바닥
+    if (map[y][x] === 2) ctx.fillStyle = "brown"; // 문
+
+    ctx.fillRect(
+      x * tileSize,
+      y * tileSize,
+      tileSize,
+      tileSize
+    );
+  }
+}
 
 // 🔥 화면 크기에 맞게 자동 설정
 canvas.width = window.innerWidth;
