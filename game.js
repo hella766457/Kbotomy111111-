@@ -1,5 +1,6 @@
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
+const wallThickness = 40;
 
 // 🔥 화면 크기에 맞게 자동 설정
 canvas.width = window.innerWidth;
