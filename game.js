@@ -14,15 +14,18 @@ let player = {
 
 let target = null;
 
-// 🔥 PC + 모바일 완전 통합 입력
 canvas.addEventListener("pointerdown", (e) => {
+  e.preventDefault();   // 🔥 기본 터치 동작 차단
+
   const rect = canvas.getBoundingClientRect();
 
   target = {
-    x: (e.clientX - rect.left),
-    y: (e.clientY - rect.top)
+    x: e.clientX - rect.left,
+    y: e.clientY - rect.top
   };
-});
+
+  console.log("터치 인식됨", target); // 디버그용
+}, { passive: false });
 
 function update() {
   if (target) {
