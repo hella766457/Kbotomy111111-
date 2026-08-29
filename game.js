@@ -26,6 +26,22 @@ let player = {
   speed: 4
 };
 
+const events = [
+  {
+    x: 5,
+    y: 3,
+
+    type: "npc",
+
+    name: "???",
+
+    dialogue: [
+      "여기까지 왔구나.",
+      "이곳에 다시 올 줄은 몰랐어."
+    ]
+  }
+];
+
 let target = null;
 
 // 터치 이동
